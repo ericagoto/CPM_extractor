@@ -1,0 +1,58 @@
+#!/usr/bin/env python3
+
+import argparse
+import re
+import sys
+
+def main(args):
+    print(f"Processing {args.input}", file=sys.stdout)
+    output_file = (
+        "/".join(args.input.split("/")[:-1])
+        + "/"
+        + args.input.split("/")[-1].split(".kml")[0]
+        + "_modified.kml"
+    )
+
+    with open(args.input) as kml_file:
+        content = kml_file.read()
+        output_content = content[:]
+        matches = re.finditer(f"<{args.column}>[\w\W]*?</{args.column}>", content)
+        for match in matches:
+            original = match.group()
+            string_number_mix = re.findall("CPM Value = \d+", match.group())
+            if len(string_number_mix) > 0:
+                numeric_value = string_number_mix[0].split(" ")[-1]
+                modified = f"<{args.column}>{numeric_value}</{args.column}>"
+            
+            output_content = output_content.replace(original, modified, 1)
+
+    with open(output_file, 'w', newline='') as of:
+        of.write(output_content)
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument(
+        "--input",
+        nargs="+",
+        type=str,
+        help="Path to time-series data file (csv)",
+        required=True,
+    )
+    parser.add_argument(
+        "--column",
+        type=str,
+        help="Name of the column to modify",
+        required=True,
+    )
+
+
+    args = parser.parse_args()
+    if type(args.input) == list:
+        inputs = args.input[:]
+        for ip in inputs:
+            args.input = ip
+            main(args)
+    else:
+        main(args)

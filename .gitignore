@@ -1,0 +1,6 @@
+.DS_Store
+kml_modifier.egg-info
+__pycache__
+venv
+.vscode
+data
