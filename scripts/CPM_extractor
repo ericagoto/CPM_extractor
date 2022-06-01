@@ -39,7 +39,7 @@ if __name__ == "__main__":
         "--input",
         nargs="+",
         type=str,
-        help="Path to time-series data file (csv)",
+        help="Path(s) to input file (kml)",
         required=True,
     )
     parser.add_argument(
