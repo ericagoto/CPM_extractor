@@ -6,6 +6,9 @@ import sys
 
 
 def main(args):
+    if not args.input.endswith(".kml"):
+        return
+
     print(f"Processing {args.input}", file=sys.stdout)
     output_file = (
         "/".join(args.input.split("/")[:-1])
@@ -24,8 +27,13 @@ def main(args):
             if len(string_number_mix) > 0:
                 numeric_value = string_number_mix[0].split(" ")[-1]
                 modified = f"<{args.column}>{numeric_value}</{args.column}>"
-
-            output_content = output_content.replace(original, modified, 1)
+            try:
+                output_content = output_content.replace(original, modified, 1)
+            except UnboundLocalError:
+                print(
+                    f"No modification required for the column defined", file=sys.stdout
+                )
+                return
 
     with open(output_file, "w", newline="") as of:
         of.write(output_content)
