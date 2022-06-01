@@ -1,1 +1,1 @@
-rm -r venv
+rd /s /q .\venv

@@ -1,2 +1,2 @@
-call ./venv/bin/activate
-python ./scripts/gui
+call .\venv\Scripts\activate
+python .\scripts\gui

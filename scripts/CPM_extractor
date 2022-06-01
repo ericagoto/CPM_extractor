@@ -29,6 +29,7 @@ def main(args):
 
     with open(output_file, "w", newline="") as of:
         of.write(output_content)
+        print(f"Modified file saved at {output_file}", file=sys.stdout)
 
 
 if __name__ == "__main__":
