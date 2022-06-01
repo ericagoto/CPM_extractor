@@ -4,6 +4,7 @@ import argparse
 import re
 import sys
 
+
 def main(args):
     print(f"Processing {args.input}", file=sys.stdout)
     output_file = (
@@ -23,10 +24,10 @@ def main(args):
             if len(string_number_mix) > 0:
                 numeric_value = string_number_mix[0].split(" ")[-1]
                 modified = f"<{args.column}>{numeric_value}</{args.column}>"
-            
+
             output_content = output_content.replace(original, modified, 1)
 
-    with open(output_file, 'w', newline='') as of:
+    with open(output_file, "w", newline="") as of:
         of.write(output_content)
 
 
@@ -46,7 +47,6 @@ if __name__ == "__main__":
         help="Name of the column to modify",
         required=True,
     )
-
 
     args = parser.parse_args()
     if type(args.input) == list:

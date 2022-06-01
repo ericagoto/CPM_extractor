@@ -12,5 +12,6 @@ setup(
     include_package_data=True,
     scripts="""
         ./scripts/CPM_extractor
+        ./scripts/gui
     """.split(),
 )
